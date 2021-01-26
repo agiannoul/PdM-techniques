@@ -132,7 +132,7 @@ class GroupAnomaly:
     # ===========================================
     def plot_deviations(self, figsize=None, savefig=None, plots=["data", "transformed_data", "strangeness", "deviation", "threshold"], debug=False):
         '''Plots the anomaly score, deviation level and p-value, over time.'''
-
+        
         register_matplotlib_converters()
 
         if self.transformer is None and "transformed_data" in plots:
@@ -148,7 +148,7 @@ class GroupAnomaly:
             nb_axs += 1
         if any(s in ["pvalue", "deviation", "threshold"] for s in plots):
             nb_axs += 1
-
+        
         fig, axs = plt.subplots(nb_axs, sharex="row", figsize=figsize)
         fig.autofmt_xdate()
         if not isinstance(axs, (np.ndarray) ): axs = np.array([axs])
@@ -195,24 +195,26 @@ class GroupAnomaly:
                 if "pvalue" in plots:
                     axs[i].scatter(T, P, alpha=0.25, marker=".", color="green")
                 if "deviation" in plots:
-                    ddd=[]
-                    dd=[]
-                    for dt , isd in zip(T,isDev):
-                        if isd==1 :
-                            ddd.append(dt)
-                            datesout.append(dt)
-                        elif isd==2:
-                            dd.append(dt)
-                            datesout.append(dt)
-                    if self.non_conformity=="Baseline":
-                        axs[i].plot(ddd, [0.05 for ddt in ddd],"bo")
-                    else:
-                        axs[i].plot(ddd, [0.5 for ddt in ddd],"bo")
-                    axs[i].plot(dd, [0.5 for ddt in dd],"mo")
+                    plotdots=False
+                    if plotdots:
+                        ddd=[]
+                        dd=[]
+                        for dt , isd in zip(T,isDev):
+                            if isd==1 :
+                                ddd.append(dt)
+                                datesout.append(dt)
+                            elif isd==2:
+                                dd.append(dt)
+                                datesout.append(dt)
+                        if self.non_conformity=="Baseline":
+                            axs[i].plot(ddd, [0.05 for ddt in ddd],"bo")
+                        else:
+                            axs[i].plot(ddd, [0.5 for ddt in ddd],"bo")
+                        axs[i].plot(dd, [0.5 for ddt in dd],"mo")
                     axs[i].plot(T, M)
                 if "threshold" in plots:
                     axs[i].axhline(y=self.dev_threshold, color='r', linestyle='--')
-                self.plot_extra_outliers(datesout,busses[uid],axs[i])
+                #self.plot_extra_outliers(datesout,busses[uid],axs[i])
                 i+=1
                 
         if savefig is None:
