@@ -124,7 +124,6 @@ class IndividualAnomalyInductive:
         self.M.append(deviation)
         
         is_deviating = deviation > self.dev_threshold
-        
         #Hybrid solution applying metacheck
         if self.metacheck==False:
             if is_deviating:
@@ -274,26 +273,28 @@ class IndividualAnomalyInductive:
                 axes[i].scatter(self.T, self.P, alpha=0.25, marker=".", color="green", label="p-value")
             if "deviation" in plots:
                 axes[i].plot(self.T, self.M, label="Deviation")
-                ddd=[]
-                dd=[]
-                dddd=[]
-                datesout=[]
-                for dt , isd in zip(self.T,self.isDev):
-                    if isd==1 :
-                        ddd.append(dt)
-                        datesout.append(dt)
-                    elif isd==2:
-                        dd.append(dt)
-                        datesout.append(dt)
-                    elif isd==-1:
-                        dddd.append(dt)
-                        datesout.append(dt)
-                if self.non_conformity=="Baseline":
-                    axes[i].plot(ddd, [0.05 for ddt in ddd],"bo")
-                else:
-                    axes[i].plot(ddd, [0.5 for ddt in ddd],"bo")
-                axes[i].plot(dd, [0.5 for ddt in dd],"mo")
-                axes[i].plot(dddd, [0.5 for ddt in dddd],"go")
+                plotdots=False
+                if plotdots:
+                    ddd=[]
+                    dd=[]
+                    dddd=[]
+                    datesout=[]
+                    for dt , isd in zip(self.T,self.isDev):
+                        if isd==1 :
+                            ddd.append(dt)
+                            datesout.append(dt)
+                        elif isd==2:
+                            dd.append(dt)
+                            datesout.append(dt)
+                        elif isd==-1:
+                            dddd.append(dt)
+                            datesout.append(dt)
+                    if self.non_conformity=="Baseline":
+                        axes[i].plot(ddd, [0.05 for ddt in ddd],"bo")
+                    else:
+                        axes[i].plot(ddd, [0.5 for ddt in ddd],"bo")
+                    axes[i].plot(dd, [0.5 for ddt in dd],"mo")
+                    axes[i].plot(dddd, [0.5 for ddt in dddd],"go")
                 for out in outl:
                     axes[i].axvline(out , color='r')
             if "threshold" in plots:
