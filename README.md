@@ -1,7 +1,7 @@
 # PdM-techniques
 
 
-Java implementaion of MCOD from https://infolab.usc.edu/Luan/Outlier/
+##Java implementaion of MCOD from https://infolab.usc.edu/Luan/Outlier/
 
   For testing busses data use MTTestBus.java while for testing the other dataset use MTTest.java.
   Use SetArguments() to set the parameters and the correct path to the datafile.
