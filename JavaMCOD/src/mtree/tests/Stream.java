@@ -106,7 +106,6 @@ public class Stream {
             counter++;
             try {
                 BufferedReader bfr = new BufferedReader(new FileReader(new File(filename)));
-
                 String line = "";
                 int time = 0;
                 try {
