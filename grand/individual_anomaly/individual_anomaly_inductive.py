@@ -238,7 +238,7 @@ class IndividualAnomalyInductive:
         if "data" in plots:
             nb_axs += 1
         if "strangeness" in plots:
-            nb_axs += 1FalF
+            nb_axs += 1
         if any(s in ["pvalue", "deviation", "threshold"] for s in plots):
             nb_axs += 1
 
