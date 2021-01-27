@@ -14,3 +14,7 @@
 
 
 ## Grand method from https://github.com/caisr-hh/group-anomaly-detection with Hybrid solution extention.
+   For testing cpulatancy.csv , mahine_temperature.csv , ambient_temperature.csv and nyc_taxi.csv with Grand method use
+   cputestgrand.py, machineTemp.py,AmbientTemp.py and taxitest.py.
+   
+   
