@@ -229,7 +229,7 @@ class IndividualAnomalyInductive:
         return [deviations[id] for id in ids]
 
     # ===========================================
-    def plot_deviations(self, figsize=None, savefig=None, plots=["data", "strangeness", "pvalue", "deviation", "threshold"],outl=[], debug=False):
+    def plot_deviations(self, figsize=None, savefig=None, plots=["data", "strangeness", "pvalue", "deviation", "threshold"],outl=[], debug=False,showdots=False):
         '''Plots the anomaly score, deviation level and p-value, over time.'''
 
         register_matplotlib_converters()
@@ -238,7 +238,7 @@ class IndividualAnomalyInductive:
         if "data" in plots:
             nb_axs += 1
         if "strangeness" in plots:
-            nb_axs += 1
+            nb_axs += 1FalF
         if any(s in ["pvalue", "deviation", "threshold"] for s in plots):
             nb_axs += 1
 
@@ -273,7 +273,7 @@ class IndividualAnomalyInductive:
                 axes[i].scatter(self.T, self.P, alpha=0.25, marker=".", color="green", label="p-value")
             if "deviation" in plots:
                 axes[i].plot(self.T, self.M, label="Deviation")
-                plotdots=False
+                plotdots=showdots
                 if plotdots:
                     ddd=[]
                     dd=[]
