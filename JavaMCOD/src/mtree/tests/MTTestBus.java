@@ -64,7 +64,7 @@ public class MTTestBus {
             double totalTime = 0;
 
             s.loadData(Constants.dataFile, false, false);
-            s.showcount();
+            //s.showcount();
             while (!stop) {
 
                 if (Constants.numberWindow != -1 && numberWindows > Constants.numberWindow) {
@@ -130,7 +130,7 @@ public class MTTestBus {
                         totalTime += elapsedTimeInSec;
                         outliers9.stream().forEach((outlier) -> {
                             if (!idOutliers.contains(outlier.arrivalTime) && outlier.nameTo.contains("Buss " + Constants.showbus)) {
-                                System.out.println(outlier.nameTo.split(" ")[2]);
+                               // System.out.println(outlier.nameTo.split(" ")[2]);
                             }
                             idOutliers.add(outlier.arrivalTime + "@" + outlier.nameTo);
 
@@ -189,22 +189,26 @@ public class MTTestBus {
 //
 //        Constants.numberWindow--;
 
-            MicroCluster.numberCluster = MicroCluster.numberCluster / numberWindows;
-            MicroCluster.avgPointsInRmcAllWindows = MicroCluster.avgPointsInRmcAllWindows / numberWindows;
-            MicroCluster.avgLengthExpsAllWindows = MicroCluster.avgLengthExpsAllWindows / numberWindows;
-            MicroCluster.numberPointsInClustersAllWindows = MicroCluster.numberPointsInClustersAllWindows / numberWindows;
-            MicroCluster_New.avgNumPointsInClusters = MicroCluster_New.avgNumPointsInClusters / numberWindows;
-            mesureThread.averageTime = totalTime * 1.0 / (numberWindows - 1);
-            System.out.println("Total time : "+totalTime);
-            mesureThread.writeResult();
-            mesureThread.stop();
-            mesureThread.interrupt();
+
 
             /**
              * Write result to file
              */
+            // create folder with one txt file for every bus witch include the outliers
+            //writeTofiles();
 
-            writeTofiles();
+
+            //SHOW RESULTS
+        for(String bus : Busses) {
+            //if(!bus.equals(Constants.bus))continue;
+            System.out.println("BUS "+bus);
+            for(Integer i : idOutliersname.keySet()){
+                String temp =idOutliersname.get(i);
+                if(temp.contains("Buss "+ bus)){
+                    System.out.println("\t"+temp.split(" ")[2]);
+                }
+            }
+        }
 
 
         if (!"".equals(Constants.resultFile)) {
@@ -244,6 +248,7 @@ public class MTTestBus {
                 for(Integer i : idOutliersname.keySet()){
                     String temp =idOutliersname.get(i);
                     if(temp.contains("Buss "+ bus)){
+                        System.out.println("\t"+temp.split(" ")[2]+"\n");
                         myWriter.write(temp.split(" ")[2]+"\n");
                     }
 
@@ -266,6 +271,7 @@ public class MTTestBus {
         Constants.numberWindow = 120;
         Constants.showbus="";
         Constants.metric="";
+        // Path of bus data folder
         Constants.dataFile = Constants.bussefile;
     }
 
