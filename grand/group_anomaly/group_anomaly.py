@@ -195,7 +195,7 @@ class GroupAnomaly:
                 if "pvalue" in plots:
                     axs[i].scatter(T, P, alpha=0.25, marker=".", color="green")
                 if "deviation" in plots:
-                    plotdots=False
+                    plotdots=True
                     if plotdots:
                         ddd=[]
                         dd=[]
@@ -222,7 +222,7 @@ class GroupAnomaly:
         else:
             figpathname = utils.create_directory_from_path(savefig)
             plt.savefig(figpathname)
-
+    # For tests purpose
     def plot_extra_outliers(self,T,bus,ax):
         path="C:/Users/panos/Desktop/ptyxiakh/apotelesmataMicrocluster/"
         filepath2 = path+'outliers/outlier'+bus+'.txt'
