@@ -146,51 +146,18 @@ public class MTTest {
                             MesureMemoryThread.timeForNewSlide = 0;
                             MesureMemoryThread.timeForExpireSlide = 0;
                         }
-//            System.out.println("#window: " + numberWindows);
-//            System.out.println("Total #outliers: " + idOutliers.size());
-//            System.out.println("Average Time: " + totalTime * 1.0 / numberWindows);
-//            System.out.println("Peak memory: " + MesureMemoryThread.maxMemory * 1.0 / 1024 / 1024);
-//            System.out.println("Time index, remove data from structure: " + MesureMemoryThread.timeForIndexing * 1.0 / 1000000000 / numberWindows);
-//            System.out.println("Time for querying: " + MesureMemoryThread.timeForQuerying * 1.0 / 1000000000 / numberWindows);
-//            System.out.println("Time for new slide: " + MesureMemoryThread.timeForNewSlide * 1.0 / 1000000000 / numberWindows);
-//            System.out.println("Time for expired slide: " + MesureMemoryThread.timeForExpireSlide * 1.0 / 1000000000 / numberWindows);
-//            System.out.println("------------------------------------");
-//
-//             if (algorithm.equals("microCluster")) {
-//
-//                System.out.println("Number clusters = " + MicroCluster.numberCluster / numberWindows);
-//                System.out.println("Max  Number points in event queue = " + MicroCluster.numberPointsInEventQueue);
-//
-//                System.out.println("Avg number points in clusters= " + MicroCluster.numberPointsInClustersAllWindows / numberWindows);
-//                System.out.println("Avg Rmc size = " + MicroCluster.avgPointsInRmcAllWindows / numberWindows);
-//                System.out.println("Avg Length exps= " + MicroCluster.avgLengthExpsAllWindows / numberWindows);
-//            }
-//            if (algorithm.equals("microCluster_new")) {
-//                System.out.println("avg points in clusters = " + MicroCluster_New.avgNumPointsInClusters * 1.0 / numberWindows);
-//                System.out.println("Avg points in event queue = " + MicroCluster_New.avgNumPointsInEventQueue * 1.0 / numberWindows);
-//                System.out.println("avg neighbor list length = " + MicroCluster_New.avgNeighborListLength * 1.0 / numberWindows);
-//            }
                     }
 
-//
-//        Constants.numberWindow--;
-                    MicroCluster.numberCluster = MicroCluster.numberCluster / numberWindows;
-                    MicroCluster.avgPointsInRmcAllWindows = MicroCluster.avgPointsInRmcAllWindows / numberWindows;
-                    MicroCluster.avgLengthExpsAllWindows = MicroCluster.avgLengthExpsAllWindows / numberWindows;
-                    MicroCluster.numberPointsInClustersAllWindows = MicroCluster.numberPointsInClustersAllWindows / numberWindows;
-                    MicroCluster_New.avgNumPointsInClusters = MicroCluster_New.avgNumPointsInClusters / numberWindows;
-                    mesureThread.averageTime = totalTime * 1.0 / (numberWindows - 1);
-                    mesureThread.writeResult();
-                    mesureThread.stop();
-                    mesureThread.interrupt();
-                    //float acc=1.0f*TruePos/(TruePos+FalsePos);
-                    //float recall=1.0f*TruePos/Constants.outliers;
-        tofoTaxi();
-        System.out.println("\n"+currentRealTime);
-                    if (!"".equals(Constants.resultFile)) {
-                        writeResult();
+        //tofoTaxi();
+        //tpfpambientTemp();
+        //tpfpMachineTemp();
+        tpfpCpuLatncy();
 
-                    }
+
+        if (!"".equals(Constants.resultFile)) {
+            writeResult();
+
+        }
 
 
     }
@@ -236,7 +203,7 @@ public class MTTest {
         }else{
             f1 = 2.0 / ((1 / acc) + (1 / recall));
         }
-        System.out.println(" Acc=" + acc);
+        System.out.println(" Precison=" + acc);
         System.out.println(" Recall=" + recall);
         System.out.println(" F1=" + f1);
         String messge = "\nMCOD R=" + Constants.R + " k=" + Constants.k + " W=" + (Constants.W/3600)+" Slide=" + (Constants.slide/3600)+ " Acc=" + acc + " Recall=" + recall + " F1=" + f1;
@@ -284,13 +251,13 @@ public class MTTest {
         }else{
             f1 = 2.0 / ((1 / acc) + (1 / recall));
         }
-        System.out.println(" Acc=" + acc);
+        System.out.println(" Precison=" + acc);
         System.out.println(" Recall=" + recall);
         System.out.println(" F1=" + f1);
         String messge = "\nMCOD R=" + Constants.R + " k=" + Constants.k + " W=" + (Constants.W/60)+ " Acc=" + acc + " Recall=" + recall + " F1=" + f1;
         mywriteresults("\\machineTemperatur\\",messge);
     }
-
+    //for CPU LATANCY TEST
     private static void tpfpCpuLatncy(){
         String[] outliersdates = {"2014-03-14 09:06:00",
                                   "2014-03-18 22:41:00",
@@ -319,13 +286,13 @@ public class MTTest {
         }else{
             f1 = 2.0 / ((1 / acc) + (1 / recall));
         }
-        System.out.println(" Acc=" + acc);
+        System.out.println(" Precison=" + acc);
         System.out.println(" Recall=" + recall);
         System.out.println(" F1=" + f1);
         String messge = "\nMCOD R=" + Constants.R + " k=" + Constants.k + " W=" + (Constants.W/60)+ " Acc=" + acc + " Recall=" + recall + " F1=" + f1;
         mywriteresults("ec2_recuest_ltancy\\",messge);
     }
-
+    //For taxi test
     private  static  void tofoTaxi(){
         String[] outliersdates = {"2014-11-02", "2014-11-27", "2014-12-25", "2015-01-01"};
         String[] Judodates = {"2015-01-23", "2015-01-24", "2015-01-25", "2015-01-26", "2015-01-27"};
@@ -337,7 +304,7 @@ public class MTTest {
         for (String reporte : outliers) {
             boolean istp = false;
             for (String out : outliersdates) {
-                if (out.equals(reporte)) {
+                if (out.equals(reporte.split(" ")[0])) {
                     istp = true;
                 }
 
@@ -367,7 +334,7 @@ public class MTTest {
         }else{
             f1 = 2.0 / ((1 / acc) + (1 / recall));
         }
-        System.out.println(" Acc=" + acc);
+        System.out.println(" Precison=" + acc);
         System.out.println(" Recall=" + recall);
         System.out.println(" F1=" + f1);
         String messge = "\nMCOD R=" + Constants.R + " k=" + Constants.k + " W=" + (Constants.W / (3600 * 24))+ " Acc=" + acc + " Recall=" + recall + " F1=" + f1;
@@ -388,16 +355,19 @@ public class MTTest {
 
     public static void setArguments(){
         algorithm="microCluster";
-        String filename=Constants.matpath+"nyc_taxi.csv";
+        //path to file with data
+        String filename=Constants.matpath+"ec2_recuest_ltancy\\cpulatancy.csv";
 
             //Constants.outliers=countOut(filename);
             //System.out.println("Outliers: "+Constants.outliers);
             //int rows=count(filename);
-            Constants.W = Integer.valueOf(3600*24*14);
+
+            //W in seconds
+            Constants.W = Integer.valueOf(125*60);
             Constants.slide =Constants.W/2;
-            Constants.k = Integer.valueOf(3);
-            Constants.R = Double.valueOf(500);
-            Constants.numberWindow = 100;
+            Constants.k = Integer.valueOf(1);
+            Constants.R = Double.valueOf(4);
+            Constants.numberWindow = 500;
             Constants.showbus="";
             Constants.metric="";
             Constants.dataFile = filename;
